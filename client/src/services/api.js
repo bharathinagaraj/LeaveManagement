@@ -23,10 +23,16 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     const apiError = error.response?.data?.error;
-    const message = apiError
+    const apiMessage =
+      typeof apiError === "string"
+        ? apiError
+        : apiError && typeof apiError.message === "string"
+          ? apiError.message
+          : null;
+    const message = apiMessage
       ? status >= 500
-        ? `${apiError}. Check that the backend is running and PostgreSQL is available.`
-        : apiError
+        ? `${apiMessage}. Check that the backend is running and PostgreSQL is available.`
+        : apiMessage
       : error.response
         ? status === 500
           ? "The API server is unavailable. Start the full application with `npm run dev` from the project folder; it starts PostgreSQL, the API, and the frontend."
