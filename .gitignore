@@ -31,3 +31,5 @@ pnpm-debug.log*
 
 # Test output
 coverage/
+.vercel
+.env*
