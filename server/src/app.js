@@ -5,6 +5,7 @@ import { login } from "./controllers/authController.js";
 import leaveRoutes from "./routes/leaveRoutes.js";
 import managerRoutes from "./routes/managerRoutes.js";
 import pool from "./config/db.js";
+import { ensureDatabase } from "./config/bootstrap.js";
 import { asyncHandler } from "./utils/asyncHandler.js";
 import {
   notFoundHandler,
@@ -23,6 +24,17 @@ if (process.env.NODE_ENV !== "test") {
     next();
   });
 }
+
+// Create schema + demo data on first request (fresh databases, serverless
+// cold starts). Resolves immediately once initialized; skipped during tests.
+app.use(async (req, res, next) => {
+  try {
+    await ensureDatabase();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 app.get("/", (req, res) => {
   res.status(200).json({

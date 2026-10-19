@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config/jwt.js";
 import { AppError } from "../utils/errors.js";
 import { getUserById } from "../services/authService.js";
-
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
 export const authenticate = async (req, res, next) => {
   try {

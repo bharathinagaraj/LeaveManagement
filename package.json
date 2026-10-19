@@ -1,6 +1,7 @@
 {
   "name": "leave-management-system",
   "private": true,
+  "type": "module",
   "scripts": {
     "setup": "npm install --prefix server && npm install --prefix client",
     "dev": "node scripts/dev.js",

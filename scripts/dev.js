@@ -1,7 +1,9 @@
-const { spawn } = require("node:child_process");
-const net = require("node:net");
-const path = require("node:path");
+import { spawn } from "node:child_process";
+import net from "node:net";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const serverDirectory = path.join(root, "server");
 const clientDirectory = path.join(root, "client");

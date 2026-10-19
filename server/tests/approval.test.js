@@ -159,7 +159,7 @@ before(async () => {
 
     // 10 sick days requested, request A of 5 then B of 6 — after A, only 5 remain
     const a = await request(app).post("/api/leaves").set("Authorization", `Bearer ${token}`).send(leaveBody({ ...FIVE, leaveType: "sick" }));
-    const b = await request(app).post("/api/leaves").set("Authorization", `Bearer ${token}`).send(leaveBody({ ...FOUR, startDate: "2026-03-02", endDate: "2026-03-05", leaveType: "sick" }));
+    const b = await request(app).post("/api/leaves").set("Authorization", `Bearer ${token}`).send(leaveBody({ ...FOUR, startDate: "2026-03-02", endDate: "2026-03-09", leaveType: "sick" }));
 
     await request(app).put(`/api/manager/requests/${a.body.leave.id}/approve`).set("Authorization", `Bearer ${managerToken}`);
 
