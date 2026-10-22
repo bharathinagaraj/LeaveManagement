@@ -1,8 +1,15 @@
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
+/**
+ * Parses a date-only value ("2026-06-08") or a full ISO timestamp into a Date.
+ * Date-only values are anchored to UTC so they always keep the exact calendar
+ * day that was stored, whatever the browser's timezone is.
+ */
 export const parseDate = (value) => {
-  if (!value || !DATE_RE.test(value)) return null;
-  const date = new Date(`${value}T00:00:00.000Z`);
+  if (!value) return null;
+  const date = DATE_RE.test(value)
+    ? new Date(`${value}T00:00:00.000Z`)
+    : new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
 };
 
@@ -29,11 +36,14 @@ export const countWorkingDays = (startDate, endDate) => {
   return days;
 };
 
+/**
+ * Formats a stored date. Rendering always happens in UTC so the value shown is
+ * exactly the calendar date held in the database, with no timezone shift.
+ */
 export const formatDate = (value) => {
   const date = parseDate(value);
   if (!date) return value || "—";
   return date.toLocaleDateString("en-US", {
-    weekday: "short",
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -41,6 +51,10 @@ export const formatDate = (value) => {
   });
 };
 
+/**
+ * Formats a stored timestamp (date + time) in UTC, so every client sees the
+ * same value regardless of its own timezone.
+ */
 export const formatDateTime = (iso) => {
   if (!iso) return "—";
   const date = new Date(iso);
@@ -51,6 +65,7 @@ export const formatDateTime = (iso) => {
     year: "numeric",
     hour: "numeric",
     minute: "2-digit",
+    timeZone: "UTC",
   });
 };
 

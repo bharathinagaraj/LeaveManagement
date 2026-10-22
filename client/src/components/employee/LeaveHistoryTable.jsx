@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import StatusBadge from "@/components/common/StatusBadge";
-import { formatDate, formatDateTime } from "@/utils/dateUtils";
+import { formatDateTime } from "@/utils/dateUtils";
 
 const LEAVE_TYPE_LABEL = { earned: "Earned", sick: "Sick" };
 
@@ -43,11 +43,11 @@ export default function LeaveHistoryTable({ leaves, onCancel, cancellingId }) {
             </TableCell>
             <TableCell>
               <span className="whitespace-nowrap">
-                {formatDate(leave.startDate)}
+                {formatDateTime(leave.startDate)}
               </span>
               {" – "}
               <span className="whitespace-nowrap">
-                {formatDate(leave.endDate)}
+                {formatDateTime(leave.endDate)}
               </span>
             </TableCell>
             <TableCell className="text-right">{leave.days}</TableCell>
